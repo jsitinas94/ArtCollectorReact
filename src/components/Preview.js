@@ -6,7 +6,8 @@ import React from 'react';
  */
 import { fetchQueryResultsFromURL } from '../api';
 
-const Preview = (props) => {
+const Preview = ({setSearchResults, setFeaturedResult, setIsLoading, searchResults:{info, records} }) => {
+
   /**
    * Destructure setSearchResults, setFeaturedResult, and setIsLoading from props
    * and also destructure info and records from props.searchResults
@@ -23,36 +24,62 @@ const Preview = (props) => {
   async function fetchPage(pageUrl) {
     setIsLoading(true);
 
-    try {
+     try {
       const results = await fetchQueryResultsFromURL(pageUrl);
       setSearchResults(results);
     } catch (error) {
       console.error(error);
     } finally {
-      setIsLoading(false);
-    }
-  }
+       setIsLoading(false);
+      }
+   }
 
   return <aside id="preview">
     <header className="pagination">
       {/* This button should be disabled if nothing is set in info.prev, and should call fetchPage with info.prev when clicked */}
       <button 
-        disabled={} 
+        disabled={info.prev ? false : true} 
         className="previous"
-        onClick={}>Previous</button>
+        onClick={(event) => {
+          event.preventDefault() 
+          fetchPage(info.prev)}}>Previous</button>
       {/* This button should be disabled if nothing is set in info.next, and should call fetchPage with info.next when clicked */}
       <button
-        disabled={}
+        disabled={info.next ? false : true}
         className="next"
-        onClick={}>Next</button>
+        onClick={(event) => {
+          event.preventDefault()
+          fetchPage(info.next)}}>Next</button>
     </header>
     <section className="results">
-      {
-        /* Here we should map over the records, and render something like this for each one:
-          <div  
+      {records.map((record, index) => {
+        return (<div  
             key={ index }
             className="object-preview"
             onClick={(event) => {
+              event.preventDefault()
+              setFeaturedResult(record)
+              // prevent the default
+              // set the featured result to be this record, using setFeaturedResult
+            }}>
+            { 
+              record.primaryimageurl ? <img src={ record.primaryimageurl } alt={ record.description } /> : ""
+              // if the record.primaryimageurl exists, show this: <img src={ record.primaryimageurl } alt={ record.description } />, otherwise show nothing 
+            }
+            {
+              record.title ? <h3>{ record.title }</h3> : <h3>MISSING INFO</h3>
+              // if the record.title exists, add this: <h3>{ record.title }</h3>, otherwise show this: <h3>MISSING INFO</h3>
+            }
+          </div>)
+          })
+      }
+          
+      
+      {/* Here we should map over the records, and render something like this for each one:
+          <div  
+            key={ index }
+            className="object-preview"
+            onClick={() => {
               // prevent the default
               // set the featured result to be this record, using setFeaturedResult
             }}>
@@ -63,10 +90,8 @@ const Preview = (props) => {
               // if the record.title exists, add this: <h3>{ record.title }</h3>, otherwise show this: <h3>MISSING INFO</h3>
             }
           </div>
-        */
-      }
+        */}
     </section>
   </aside>
 }
-
-export default Preview;
+ export default Preview;
