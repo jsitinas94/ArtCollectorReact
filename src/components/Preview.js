@@ -42,14 +42,16 @@ const Preview = ({setSearchResults, setFeaturedResult, setIsLoading, searchResul
         className="previous"
         onClick={(event) => {
           event.preventDefault() 
-          fetchPage(info.prev)}}>Previous</button>
+          fetchPage(info.prev)}}>Previous
+      </button>
       {/* This button should be disabled if nothing is set in info.next, and should call fetchPage with info.next when clicked */}
       <button
         disabled={info.next ? false : true}
         className="next"
         onClick={(event) => {
           event.preventDefault()
-          fetchPage(info.next)}}>Next</button>
+          fetchPage(info.next)}}>Next
+      </button>
     </header>
     <section className="results">
       {records.map((record, index) => {
@@ -73,9 +75,7 @@ const Preview = ({setSearchResults, setFeaturedResult, setIsLoading, searchResul
           </div>)
           })
       }
-          
-      
-      {/* Here we should map over the records, and render something like this for each one:
+       {/* above we should map over the records, and render something like this for each one:
           <div  
             key={ index }
             className="object-preview"

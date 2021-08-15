@@ -32,26 +32,25 @@ import { fetchQueryResultsFromTermAndValue } from '../api';
  */
 const Searchable = ({searchTerm, searchValue, setIsLoading, setSearchResults}) => {
 
-
-
-        return (
-            <Fragment>
+    return (
+        <Fragment>
             <span className="title">{searchTerm}</span>
             <span key={searchValue} className="content">
-            <a href="#" onClick={async (event) => {
-            event.preventDefault()
-            setIsLoading(true);
-            try {
-                const result = await fetchQueryResultsFromTermAndValue(searchTerm, searchValue)
-                setSearchResults(result)
-            } catch(error) {
-                console.error(error)
-            } finally {
-                setIsLoading(false); 
-            }
-        }}>{searchValue}</a>
-       </span></Fragment>
-       )
+                <a href="#" onClick={async (event) => {
+                    event.preventDefault()
+                    setIsLoading(true);
+                    try {
+                        const result = await fetchQueryResultsFromTermAndValue(searchTerm, searchValue)
+                        setSearchResults(result)
+                    } catch(error) {
+                        console.error(error)
+                    } finally {
+                        setIsLoading(false); 
+                    }
+                }}>{searchValue}</a>
+            </span>
+        </Fragment>
+    )
 }
 
 /**
@@ -95,7 +94,6 @@ const Feature = ({featuredResult, setIsLoading, setSearchResults}) => {
         const {title, dated, images, primaryimageurl, description, culture, style, 
             technique, medium, dimensions, people, department, division, contact, creditline} = featuredResult;
         
-
         return (
             <main id="feature">
                 <div className="object-feature">

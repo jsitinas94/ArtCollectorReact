@@ -38,7 +38,6 @@ const App = () => {
       setSearchResults={setSearchResults}
       setFeaturedResult={setFeaturedResult}
     />
-
     {/* <Feature /> needs props for featuredResult, as well as setIsLoading and setSearchResults (clicking on searchable properties) */}
     <Feature 
             featuredResult={featuredResult}
